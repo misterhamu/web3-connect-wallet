@@ -24,15 +24,29 @@ import {
   zora,
 } from 'wagmi/chains';
 
+export const ariseChain: any = {
+  id: 4833,
+  name: 'Arise Testnet',
+network: 'arisetestnet',
+  nativeCurrency: {
+      decimals: 18,
+  name: 'Arise',
+  symbol: 'Arise',
+  },
+rpcUrls: {
+  public: {
+    http: ['https://aster-rpc-nonprd.arisetech.dev'],
+  },
+  default: {
+    http: ['https://aster-rpc-nonprd.arisetech.dev'],
+  },
+},
+  testnet: true,
+}
+
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    zora,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : [sepolia]),
+    ariseChain,
   ],
   [publicProvider()]
 );
@@ -50,9 +64,8 @@ const demoAppInfo = {
 };
 
 const connectors = connectorsForWallets([
-  ...wallets,
   {
-    groupName: 'Other',
+    groupName: 'Metamask',
     wallets: [
       metaMaskWallet({ projectId, chains })
     ],
