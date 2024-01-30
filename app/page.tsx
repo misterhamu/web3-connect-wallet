@@ -1,14 +1,25 @@
 "use client"
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useSignMessage } from "wagmi";
+import { useEffect } from "react";
+import { useAccount, useNetwork, useSignMessage } from "wagmi";
 
 function Page() {
+  const { isConnected } = useAccount() 
+  const { chain } = useNetwork()
   const { data, error, isLoading, signMessage, isError } = useSignMessage({
     onSuccess(data, variables) {
       alert(data);
     },
     onError(error) {},
   });
+
+  useEffect(()=>{
+    if(isConnected && !chain?.unsupported){
+      signMessage({ message: "test Sign Message" });
+    }
+
+  },[isConnected,chain]
+  )
   return (
     <>
       <div
